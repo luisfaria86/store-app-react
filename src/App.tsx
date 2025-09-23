@@ -10,11 +10,10 @@ const ProductDetails = lazy(() => import('./pages/productDetails'));
 function App() {
   return (
     <BrowserRouter>
-      <div className='mx-auto'>
         <div className='sticky w-full top-0 z-50'>
           <NavBar title={'My Grocery Shop'} />
         </div>
-        <div className='overflow-y-auto pt-20 w-full'>
+        <div className='overflow-y-auto pt-20 w-full max-w-screen-xl mx-auto'>
           <Suspense fallback={<div>Loading...</div>}>
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -24,7 +23,6 @@ function App() {
               </Routes>
             </Suspense>
           </div>
-        </div>
     </BrowserRouter>
   )
 }
