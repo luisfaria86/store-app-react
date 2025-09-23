@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../Button';
 import { FiltersProps } from './types';
 
-const Filters: React.FC<FiltersProps> = ({ filterOptions, onFilterChange }) => {
+const Filters: React.FC<FiltersProps> = React.memo(({ filterOptions, onFilterChange }) => {
   return (
     <div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
       {filterOptions.map(option => (
@@ -14,7 +14,7 @@ const Filters: React.FC<FiltersProps> = ({ filterOptions, onFilterChange }) => {
       ))}
     </div>
   );
-};
+});
 
 export default Filters;
 

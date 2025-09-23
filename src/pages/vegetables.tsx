@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Card from '../components/Card';
 import { products } from "../utils/mockdata";
 import { ProductsT } from '../types';
 import Heading from '../components/Heading';
 
 const Vegetables: React.FC = () => {
-  const vegetables = products.filter((product: ProductsT) => product.type === 'vegetable');
+  const vegetables = useMemo(() => {
+    return products.filter((product: ProductsT) => product.type === 'vegetable');
+  }, []);
 
   return (
     <div className="p-4">

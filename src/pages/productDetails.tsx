@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { products } from '../utils/mockdata';
 import { ProductsT } from '../types';
 
 const ProductDetails: React.FC = () => {
    const { id } = useParams<{ id: string }>();
-  
-  if (!id) {
-    return <p>Product not found!</p>;
-  }
 
-  const product = products.find((p: ProductsT) => p.id === id);
+   const product = useMemo(() => {
+     if (!id) return undefined;
+     return products.find((p: ProductsT) => p.id === id);
+   }, [id]);
 
   if (!product) {
     return <p>Product not found!</p>;

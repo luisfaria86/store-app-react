@@ -1,10 +1,12 @@
+import React from 'react';
+
 export interface PaginationProps {
   handlePreviousPage: () => void;
   handleNextPage: () => void;
   pages: string
 };
 
-const Pagination = ({ pages, handlePreviousPage, handleNextPage }: PaginationProps) => {
+const Pagination = React.memo(({ pages, handlePreviousPage, handleNextPage }: PaginationProps) => {
   return (
     <div className="flex justify-center mt-4 mb-12">
         <button
@@ -24,7 +26,7 @@ const Pagination = ({ pages, handlePreviousPage, handleNextPage }: PaginationPro
         </button>
       </div>
   );
-};
+});
 
 export default Pagination;
 
