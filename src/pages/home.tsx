@@ -14,9 +14,12 @@ const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     setCurrentPage(1);
+    // when debounced searchQuery changes, user has stopped typing
+    setIsTyping(false);
   }, [searchQuery]);
 
   const memoizedFilteredProducts = useMemo(() => {
@@ -54,6 +57,19 @@ const Home: React.FC = () => {
     handlePageChange(currentPage + 1);
   }, [currentPage, handlePageChange]);
 
+  const loadItems = (): React.ReactNode => {
+    return Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+      <div key={i} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden">
+        <div style={{ aspectRatio: '4/3', width: '100%', backgroundColor: '#f3f4f6' }} className="animate-pulse" />
+        <div className="p-5 min-h-[150px]">
+          <div className="h-6 bg-gray-200 rounded mb-2 w-3/4 animate-pulse" />
+          <div className="h-4 bg-gray-200 rounded w-1/2 mb-3 animate-pulse" />
+          <div className="h-3 bg-gray-200 rounded w-1/3 animate-pulse" />
+        </div>
+      </div>
+    ));
+  }
+
   return (
     <div className="w-full">
         <div className='flex items-baseline justify-center'>
@@ -61,28 +77,36 @@ const Home: React.FC = () => {
                 <Heading text={"Here you will find all the products we offer."} />
             </div>
              <div className="relative hidden md:block">
-                <InputSearch placeholder={"Search products..."} onDebouncedChange={setSearchQuery} />
+                <InputSearch
+                  placeholder={"Search products..."}
+                  onDebouncedChange={setSearchQuery}
+                  onInputChange={(typing: boolean) => setIsTyping(typing)}
+                />
             </div>
         </div>
         <div className='flex justify-center'>
             <Filters filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         </div>
-            {memoizedCurrentProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4" style={{ minHeight: "500px"}}>
-                    {memoizedCurrentProducts.map((product: ProductsT) => (
-                        <Card 
-                            key={product.id} 
-                            title={product.name} 
-                            price={product.price_per_kg} 
-                            image={product.image} 
-                            origin={product.origin}
-                            id={product.id}
-                        />
-                    ))}
-                </div>
-                ) : (
-                <p className="text-center font-bold text-lg" style={{ minHeight: "500px"}}>No results found!</p>
-            )}
+      {isTyping ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 min-h-[500px]">
+          {loadItems()}
+        </div>
+      ) : memoizedCurrentProducts.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 min-h-[500px]">
+          {memoizedCurrentProducts.map((product: ProductsT) => (
+            <Card
+              key={product.id}
+              title={product.name}
+              price={product.price_per_kg}
+              image={product.image}
+              origin={product.origin}
+              id={product.id}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center font-bold text-lg min-h-[500px]">No results found!</p>
+      )}
         <div className='mb-12'>
             <Pagination 
                 pages={`Page ${currentPage} of ${totalPages}`}

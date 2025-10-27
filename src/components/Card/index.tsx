@@ -12,16 +12,15 @@ export interface CardProps {
 const Card = React.memo(({ title, price, image, origin, id }: CardProps) => {
   return (
     <Link to={`/product/${id}`}>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-            <div className="aspect-w-4 aspect-h-3 w-full">
-                <img 
-                    className="rounded-t-lg object-cover w-full h-full" 
-                    src={image} 
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden">
+            <div>
+                <img
+                    className="rounded-t-lg object-cover w-full h-full"
+                    src={image}
                     alt={title}
                     width={400}
                     height={300}
                     loading="lazy"
-                    style={{ minHeight: '200px' }}
                 />
             </div>
             <div className="p-5 min-h-[150px]">

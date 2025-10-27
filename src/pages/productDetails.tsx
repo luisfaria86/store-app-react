@@ -20,7 +20,7 @@ const ProductDetails: React.FC = () => {
       <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4" />
       <p className="text-lg">Price: €{product.price_per_kg} per kg</p>
       <p className="text-lg">Origin: {product.origin}</p>
-      <p className="text-lg">Description: {product.origin}</p>
+      <p className="text-sm">Description: {product.origin}</p>
     </div>
   );
 };
