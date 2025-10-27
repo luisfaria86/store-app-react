@@ -11,7 +11,7 @@ const Vegetables: React.FC = () => {
 
   return (
     <div className="p-4">
-      <Heading text={"Welcome to the Vegetables page. Here you will find all the vegetables we offer."} />
+      <Heading text={"Here you will find all the vegetables we offer."} />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-5">
         {vegetables.map((vegetable: ProductsT) => (
           <Card

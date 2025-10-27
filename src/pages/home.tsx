@@ -72,8 +72,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="w-full">
-        <div className='flex items-baseline justify-center'>
-            <div className="mb-3 mr-5">
+        <div className='flex items-baseline justify-between'>
+            <div className="mb-3 px-5">
                 <Heading text={"Here you will find all the products we offer."} />
             </div>
              <div className="relative hidden md:block">
