@@ -18,7 +18,6 @@ function App() {
   )
 }
 
-// Separate component to use the theme context
 function AppContent() {
   const { isDarkMode } = useTheme();
   
