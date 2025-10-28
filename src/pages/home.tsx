@@ -6,7 +6,7 @@ import InputSearch from '../components/InputSearch/index.tsx';
 import Heading from '../components/Heading/index.tsx';
 import { filterOptions } from '../utils/consts.ts';
 import { products } from "../utils/mockdata.ts";
-import { ProductsT } from '../types.ts';
+import { Products } from '../types.ts';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
   }, [searchQuery]);
 
   const memoizedFilteredProducts = useMemo(() => {
-    return products.filter((product: ProductsT) => {
+    return products.filter((product: Products) => {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesFilter = selectedFilter === 'all' || product.origin === selectedFilter;
       return matchesFilter && matchesSearch;
@@ -59,41 +59,44 @@ const Home: React.FC = () => {
 
   const loadItems = (): React.ReactNode => {
     return Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-      <div key={i} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden">
-        <div style={{ aspectRatio: '4/3', width: '100%', backgroundColor: '#f3f4f6' }} className="animate-pulse" />
+      <div key={i} className="max-w-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow overflow-hidden">
+        <div style={{ aspectRatio: '4/3', width: '100%' }} className="bg-gray-200 dark:bg-gray-700 animate-pulse" />
         <div className="p-5 min-h-[150px]">
-          <div className="h-6 bg-gray-200 rounded mb-2 w-3/4 animate-pulse" />
-          <div className="h-4 bg-gray-200 rounded w-1/2 mb-3 animate-pulse" />
-          <div className="h-3 bg-gray-200 rounded w-1/3 animate-pulse" />
+          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2 w-3/4 animate-pulse" />
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-3 animate-pulse" />
+          <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/3 animate-pulse" />
         </div>
       </div>
     ));
   }
 
   return (
-    <div className="w-full">
-        <div className='flex items-baseline justify-between'>
-            <div className="mb-3 px-5">
-                <Heading text={"Here you will find all the products we offer."} />
-            </div>
-             <div className="relative hidden md:block">
-                <InputSearch
-                  placeholder={"Search products..."}
-                  onDebouncedChange={setSearchQuery}
-                  onInputChange={(typing: boolean) => setIsTyping(typing)}
-                />
-            </div>
+    <div className="w-full transition-colors duration-200">
+      <div className='flex items-baseline justify-center'>
+        <div className="mb-3 mr-5">
+          <Heading text={"Here you will find all the products we offer."} className="text-gray-900 dark:text-white" />
         </div>
-        <div className='flex justify-center'>
-            <Filters filterOptions={filterOptions} onFilterChange={handleFilterChange} />
+        <div className="relative hidden md:block">
+          <InputSearch 
+            placeholder={"Search products..."} 
+            onDebouncedChange={setSearchQuery} 
+            onInputChange={(typing: boolean) => setIsTyping(typing)}
+            className="dark:bg-gray-800 dark:text-white"
+          />
         </div>
+      </div>
+
+      <div className='flex justify-center'>
+        <Filters filterOptions={filterOptions} onFilterChange={handleFilterChange} />
+      </div>
+
       {isTyping ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 min-h-[500px]">
           {loadItems()}
         </div>
       ) : memoizedCurrentProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 min-h-[500px]">
-          {memoizedCurrentProducts.map((product: ProductsT) => (
+          {memoizedCurrentProducts.map((product: Products) => (
             <Card
               key={product.id}
               title={product.name}
@@ -107,13 +110,14 @@ const Home: React.FC = () => {
       ) : (
         <p className="text-center font-bold text-lg min-h-[500px]">No results found!</p>
       )}
-        <div className='mb-12'>
-            <Pagination 
-                pages={`Page ${currentPage} of ${totalPages}`}
-                handlePreviousPage={handlePrevPageClick} 
-                handleNextPage={handleNextPageClick}
-            />
-        </div>
+
+      <div className='mb-12'>
+        <Pagination 
+          pages={`Page ${currentPage} of ${totalPages}`}
+          handlePreviousPage={handlePrevPageClick} 
+          handleNextPage={handleNextPageClick}
+        />
+      </div>
     </div>
   );
 };

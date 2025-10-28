@@ -8,6 +8,7 @@ export interface InputSearchProps {
   placeholder: string;
   onDebouncedChange: (value: string) => void;
   onInputChange?: (isTyping: boolean) => void;
+  className?: string;
 }
 
 const InputSearch = ({ label, placeholder, onDebouncedChange, onInputChange }: InputSearchProps) => {
@@ -29,7 +30,7 @@ const InputSearch = ({ label, placeholder, onDebouncedChange, onInputChange }: I
         <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">{label}</label>
     <div className="relative">
       <div className="absolute inset-y-0 start-0 flex items-center ps-3">
-          <InputSearchIcon className=''/>
+          <InputSearchIcon />
       </div>
       <input
         type="search"

@@ -19,10 +19,25 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+        // Prevent crash from @typescript-eslint/no-unused-expressions by configuring options
+        // and disabling the core rule which it wraps.
+        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': [
+          'warn',
+          {
+            allowShortCircuit: true,
+            allowTernary: true,
+            allowTaggedTemplates: true,
+          },
+        ],
+        '@typescript-eslint/no-unused-vars': ['warn', { 
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_' 
+        }],
+        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off'
     },
   },
 )

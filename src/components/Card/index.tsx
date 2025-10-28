@@ -12,8 +12,8 @@ export interface CardProps {
 const Card = React.memo(({ title, price, image, origin, id }: CardProps) => {
   return (
     <Link to={`/product/${id}`}>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden">
-            <div>
+        <div className="max-w-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md hover:shadow-lg overflow-hidden transition-shadow duration-300">
+            <div className="aspect-w-4 aspect-h-3">
                 <img
                     className="rounded-t-lg object-cover w-full h-full"
                     src={image}
@@ -24,9 +24,9 @@ const Card = React.memo(({ title, price, image, origin, id }: CardProps) => {
                 />
             </div>
             <div className="p-5 min-h-[150px]">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2">{title}</h5>
-                <p className="mb-3 font-normal text-gray-700">{price} €/kg</p>
-                <span className="text-sm font-light text-gray-400">{origin}</span>
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-500">{title}</h5>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-300">{price} €/kg</p>
+                <span className="text-sm font-light text-gray-500 dark:text-gray-400">{origin}</span>
             </div>
         </div>
     </Link>
